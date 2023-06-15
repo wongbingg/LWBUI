@@ -1,5 +1,5 @@
 //
-//  ModernCategoriesView.swift
+//  ModernCategoryView.swift
 //  LWBUI
 //
 //  Created by 이원빈 on 2023/05/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ModernCategoriesView: View {
+struct ModernCategoryView: View {
     let data: [String]
     @Binding var selectedCategory: String
     
@@ -27,7 +27,6 @@ struct ModernCategoriesView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-//            .animation(.default, value: selectedCategory)
         }
     }
 }
@@ -35,7 +34,7 @@ struct ModernCategoriesView: View {
 struct ModernCategoriesView_Previews: PreviewProvider {
     @State static var cate = "C View"
     static var previews: some View {
-        ModernCategoriesView(
+        ModernCategoryView(
             data: ["A is a category of View", "B is also a catego", "C View", "D end View1"],
             selectedCategory: $cate
         )

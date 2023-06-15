@@ -88,7 +88,9 @@ struct HorizontalScrollBar_Previews: PreviewProvider {
 
     static var previews: some View {
         HorizontalScrollBar(
-            data: ["전체", "포트폴리오", "핀테크 트렌드", "핫 플레이스", "쿨 피플", "잘알못 칼럼", "gkgkdhdh", "Leewonbeen", "ddddddddddddddd"],
+            data: ["전체", "포트폴리오", "핀테크 트렌드",
+                   "핫 플레이스", "쿨 피플", "잘알못 칼럼",
+                   "gkgkdhdh", "Leewonbeen", "ddddddddddddddd"],
             selectedCategory: selectedCt
         )
     }
