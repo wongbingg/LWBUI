@@ -13,7 +13,7 @@
 		AF1517192A207AFE0093C6EE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF1517182A207AFE0093C6EE /* Preview Assets.xcassets */; };
 		AF984AA02A2DC9E200D7F542 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF984A9F2A2DC9E200D7F542 /* BottomSheet.swift */; };
 		AF984AA22A2DCAB600D7F542 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF984AA12A2DCAB600D7F542 /* TestView.swift */; };
-		AFA232842A20A25600C93F54 /* ModernCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232832A20A25600C93F54 /* ModernCategoriesView.swift */; };
+		AFA232842A20A25600C93F54 /* ModernCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232832A20A25600C93F54 /* ModernCategoryView.swift */; };
 		AFA232862A20A51D00C93F54 /* HorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232852A20A51D00C93F54 /* HorizontalScrollBar.swift */; };
 		AFA232882A20A76C00C93F54 /* Animation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232872A20A76C00C93F54 /* Animation+.swift */; };
 		AFC070E32A29B1C6008D859C /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC070E22A29B1C6008D859C /* ListView.swift */; };
@@ -28,7 +28,7 @@
 		AF1517182A207AFE0093C6EE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF984A9F2A2DC9E200D7F542 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		AF984AA12A2DCAB600D7F542 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		AFA232832A20A25600C93F54 /* ModernCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernCategoriesView.swift; sourceTree = "<group>"; };
+		AFA232832A20A25600C93F54 /* ModernCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernCategoryView.swift; sourceTree = "<group>"; };
 		AFA232852A20A51D00C93F54 /* HorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollBar.swift; sourceTree = "<group>"; };
 		AFA232872A20A76C00C93F54 /* Animation+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+.swift"; sourceTree = "<group>"; };
 		AFC070E22A29B1C6008D859C /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -64,17 +64,8 @@
 		AF15170F2A207AFD0093C6EE /* LWBUI */ = {
 			isa = PBXGroup;
 			children = (
-				AF1517102A207AFD0093C6EE /* LWBUIApp.swift */,
-				AF1517122A207AFD0093C6EE /* ContentView.swift */,
-				AFA232872A20A76C00C93F54 /* Animation+.swift */,
-				AFA232832A20A25600C93F54 /* ModernCategoriesView.swift */,
-				AFC070E22A29B1C6008D859C /* ListView.swift */,
-				AFA232852A20A51D00C93F54 /* HorizontalScrollBar.swift */,
-				AF984A9F2A2DC9E200D7F542 /* BottomSheet.swift */,
-				AF984AA12A2DCAB600D7F542 /* TestView.swift */,
-				AF1517142A207AFE0093C6EE /* Assets.xcassets */,
-				AF1517162A207AFE0093C6EE /* LWBUI.entitlements */,
-				AF1517172A207AFE0093C6EE /* Preview Content */,
+				AF3B94232A370D3000B2C768 /* Resources */,
+				AF3B94252A370DC400B2C768 /* Sources */,
 			);
 			path = LWBUI;
 			sourceTree = "<group>";
@@ -85,6 +76,71 @@
 				AF1517182A207AFE0093C6EE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AF3B941F2A370CB300B2C768 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AFA232872A20A76C00C93F54 /* Animation+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AF3B94202A370CD100B2C768 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				AF3B94222A370D1F00B2C768 /* BottomSheet */,
+				AF3B94212A370CDC00B2C768 /* ModernCategoryView */,
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		AF3B94212A370CDC00B2C768 /* ModernCategoryView */ = {
+			isa = PBXGroup;
+			children = (
+				AFA232832A20A25600C93F54 /* ModernCategoryView.swift */,
+				AFA232852A20A51D00C93F54 /* HorizontalScrollBar.swift */,
+				AFC070E22A29B1C6008D859C /* ListView.swift */,
+			);
+			path = ModernCategoryView;
+			sourceTree = "<group>";
+		};
+		AF3B94222A370D1F00B2C768 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				AF984A9F2A2DC9E200D7F542 /* BottomSheet.swift */,
+				AF984AA12A2DCAB600D7F542 /* TestView.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		AF3B94232A370D3000B2C768 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AF1517172A207AFE0093C6EE /* Preview Content */,
+				AF1517142A207AFE0093C6EE /* Assets.xcassets */,
+				AF1517162A207AFE0093C6EE /* LWBUI.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AF3B94242A370D7F00B2C768 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AF1517102A207AFD0093C6EE /* LWBUIApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		AF3B94252A370DC400B2C768 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AF1517122A207AFD0093C6EE /* ContentView.swift */,
+				AF3B941F2A370CB300B2C768 /* Extensions */,
+				AF3B94242A370D7F00B2C768 /* App */,
+				AF3B94202A370CD100B2C768 /* UIComponents */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,7 +220,7 @@
 				AF984AA22A2DCAB600D7F542 /* TestView.swift in Sources */,
 				AFC070E32A29B1C6008D859C /* ListView.swift in Sources */,
 				AF1517112A207AFD0093C6EE /* LWBUIApp.swift in Sources */,
-				AFA232842A20A25600C93F54 /* ModernCategoriesView.swift in Sources */,
+				AFA232842A20A25600C93F54 /* ModernCategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,10 +341,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = LWBUI/LWBUI.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LWBUI/Resources/LWBUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LWBUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"LWBUI/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = SWPBG3YXG5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -323,10 +379,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = LWBUI/LWBUI.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LWBUI/Resources/LWBUI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LWBUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"LWBUI/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = SWPBG3YXG5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
