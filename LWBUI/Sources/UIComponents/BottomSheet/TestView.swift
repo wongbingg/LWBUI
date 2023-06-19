@@ -11,19 +11,15 @@ struct TestView: View {
     @State private var isShowModal: Bool = false
     var body: some View {
         VStack {
-            
             Rectangle()
                 .frame(width: Constants.deviceWidth, height: 300)
                 .foregroundColor(.clear)
-                .debug(alignment: .bottom)
 
             Text("BottomSheet 테스트용 화면입니다. ")
-                .debug(.green, alignment: .bottomTrailing)
             
             Rectangle()
                 .frame(width: Constants.deviceWidth, height: 300)
                 .foregroundColor(.clear)
-                .debug(alignment: .top)
             
             Button {
                 withAnimation(.ripple()) {
@@ -32,13 +28,10 @@ struct TestView: View {
             } label: {
                 Text("Modal")
             }
-            .debug(.red, alignment: .bottomLeading)
             
             Spacer()
-            
-            BottomSheet(height: 300, title: "이메일 변경", isShow: $isShowModal)
         }
-        .ignoresSafeArea()
+        .bottomSheet(isShow: $isShowModal, height: 300, title: "이메일 변경")
     }
 }
 
@@ -51,6 +44,7 @@ struct TestView_Previews: PreviewProvider {
 // MARK: - View Debugging Tool (from. havi)
 
 public extension View {
+    
     func debug(_ color: Color = .blue, alignment: Alignment = .topTrailing) -> some View {
         modifier(FrameInfo(color: color, alignment: alignment))
     }
