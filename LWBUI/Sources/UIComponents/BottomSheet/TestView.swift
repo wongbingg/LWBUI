@@ -13,7 +13,7 @@ struct TestView: View {
         VStack {
             
             Rectangle()
-                .frame(width: 100, height: 300)
+                .frame(width: Constants.deviceWidth, height: 300)
                 .foregroundColor(.clear)
                 .debug(alignment: .bottom)
 
@@ -21,7 +21,7 @@ struct TestView: View {
                 .debug(.green, alignment: .bottomTrailing)
             
             Rectangle()
-                .frame(width: 100, height: 300)
+                .frame(width: Constants.deviceWidth, height: 300)
                 .foregroundColor(.clear)
                 .debug(alignment: .top)
             
