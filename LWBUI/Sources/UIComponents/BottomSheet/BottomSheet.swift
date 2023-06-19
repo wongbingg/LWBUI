@@ -25,38 +25,39 @@ extension View {
 }
 
 struct BottomSheet: View {
+    @Binding var isShow: Bool
+    
     let height: CGFloat
     let title: String
     
-    @Binding var isShow: Bool
-    
     var body: some View {
         if isShow {
-            Rectangle()
-                .frame(width: UIScreen.main.bounds.width, height: height)
-                .foregroundColor(Color(.systemGray6))
-                .edgesIgnoringSafeArea(.bottom)
-                .transition(.move(edge: .bottom))
-                .overlay {
-                    VStack {
-                        HStack {
-                            ZStack {
-                                Text(title)
-                                    .padding()
-                                    .debug(alignment: .bottom)
-                                HStack {
-                                    Spacer()
-                                    dismissButton
-                                        .debug(alignment: .bottomLeading)
-                                        .padding(.trailing, 16)
+            VStack {
+                Spacer()
+                Rectangle()
+                    .frame(width: UIScreen.main.bounds.width, height: height)
+                    .foregroundColor(Color(.systemGray6))
+                    .edgesIgnoringSafeArea(.bottom)
+                    .transition(.move(edge: .bottom))
+                    .overlay {
+                        VStack {
+                            HStack {
+                                ZStack {
+                                    Text(title)
+                                        .padding()
+                                    HStack {
+                                        Spacer()
+                                        dismissButton
+                                            .padding(.trailing, 16)
+                                    }
                                 }
                             }
+                            Divider()
+                            Spacer()
                         }
-                        Divider()
-                        Spacer()
                     }
-                }
-                .cornerRadius(16, corners: [.topLeft, .topRight])
+                    .cornerRadius(16, corners: [.topLeft, .topRight])
+            }
         }
     }
     
@@ -73,8 +74,42 @@ struct BottomSheet: View {
     }
 }
 
+struct BottomSheetInfo: ViewModifier {
+    @Binding var isShowModal: Bool
+    let height: CGFloat
+    let title: String
+    
+    func body(content: Content) -> some View {
+        content
+            .overlay {
+                
+                Color.black.opacity(isShowModal ? 0.3 : 0)
+                    .disabled(isShowModal == false)
+                    .onTapGesture {
+                        withAnimation {
+                            isShowModal = false
+                        }
+                    }
+                
+                VStack {
+                    Spacer()
+                    BottomSheet(isShow: $isShowModal, height: height, title: title)
+                    .transition(.move(edge: .bottom))
+                }
+                .edgesIgnoringSafeArea(.bottom)
+            }
+    }
+}
+
+extension View {
+    
+    func bottomSheet(isShow: Binding<Bool>, height: CGFloat, title: String) -> some View {
+        modifier(BottomSheetInfo(isShowModal: isShow, height: height, title: title))
+    }
+}
+
 struct BottomSheet_Previews: PreviewProvider {
     static var previews: some View {
-        BottomSheet(height: 212, title: "이메일 변경", isShow: .constant(true))
+        BottomSheet(isShow: .constant(true), height: 212, title: "이메일 변경")
     }
 }
