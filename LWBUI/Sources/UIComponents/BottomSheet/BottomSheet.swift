@@ -26,9 +26,10 @@ extension View {
 
 struct BottomSheet: View {
     @Binding var isShow: Bool
-    
     let height: CGFloat
     let title: String
+    let injectecView: AnyView
+//    var sheetBody: some View
     
     var body: some View {
         if isShow {
@@ -37,8 +38,6 @@ struct BottomSheet: View {
                 Rectangle()
                     .frame(width: UIScreen.main.bounds.width, height: height)
                     .foregroundColor(Color(.systemGray6))
-                    .edgesIgnoringSafeArea(.bottom)
-                    .transition(.move(edge: .bottom))
                     .overlay {
                         VStack {
                             HStack {
@@ -54,6 +53,11 @@ struct BottomSheet: View {
                             }
                             Divider()
                             Spacer()
+                                .frame(width: Constants.deviceWidth)
+                                .overlay {
+                                    // TODO: 외부에서 주입받은 View
+                                    injectecView
+                                }
                         }
                     }
                     .cornerRadius(16, corners: [.topLeft, .topRight])
@@ -78,6 +82,7 @@ struct BottomSheetInfo: ViewModifier {
     @Binding var isShowModal: Bool
     let height: CGFloat
     let title: String
+    let injectedView: AnyView
     
     func body(content: Content) -> some View {
         content
@@ -93,7 +98,7 @@ struct BottomSheetInfo: ViewModifier {
                 
                 VStack {
                     Spacer()
-                    BottomSheet(isShow: $isShowModal, height: height, title: title)
+                    BottomSheet(isShow: $isShowModal, height: height, title: title, injectecView: injectedView)
                     .transition(.move(edge: .bottom))
                 }
                 .edgesIgnoringSafeArea(.bottom)
@@ -103,13 +108,13 @@ struct BottomSheetInfo: ViewModifier {
 
 extension View {
     
-    func bottomSheet(isShow: Binding<Bool>, height: CGFloat, title: String) -> some View {
-        modifier(BottomSheetInfo(isShowModal: isShow, height: height, title: title))
+    func bottomSheet(isShow: Binding<Bool>, height: CGFloat, title: String, injectedView: AnyView) -> some View {
+        modifier(BottomSheetInfo(isShowModal: isShow, height: height, title: title, injectedView: injectedView))
     }
 }
 
 struct BottomSheet_Previews: PreviewProvider {
     static var previews: some View {
-        BottomSheet(isShow: .constant(true), height: 212, title: "이메일 변경")
+        BottomSheet(isShow: .constant(true), height: 300, title: "동의 서약서", injectecView: AnyView(Text("df")))
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TestView: View {
     @State private var isShowModal: Bool = false
+    @State private var inputText: String = ""
     var body: some View {
         VStack {
             Rectangle()
@@ -31,7 +32,26 @@ struct TestView: View {
             
             Spacer()
         }
-        .bottomSheet(isShow: $isShowModal, height: 300, title: "이메일 변경")
+        .bottomSheet(isShow: $isShowModal, height: 250, title: "이메일 변경", injectedView: AnyView(
+            VStack {
+                TextField("이메일을 변경해주세요", text: $inputText)
+                    .cornerRadius(14)
+                    .padding()
+                    .border(Color(.systemGray2))
+                    .padding()
+                
+                Button {
+                    inputText = ""
+                } label: {
+                    Capsule()
+                        .frame(width: 200, height: 50)
+                        .overlay {
+                            Text("확인")
+                                .foregroundColor(.white)
+                        }
+                }
+            }
+        ))
     }
 }
 
