@@ -8,9 +8,9 @@
 import SwiftUI
 
 extension Animation {
-    static func ripple() -> Animation {
+    static func ripple(dampingFraction: CGFloat = 0.65, speed: CGFloat = 1.5) -> Animation {
         Animation
-            .spring(dampingFraction: 0.75)
-            .speed(1.5)
+            .spring(dampingFraction: dampingFraction)
+            .speed(speed)
     }
 }
