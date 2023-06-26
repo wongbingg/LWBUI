@@ -25,27 +25,11 @@ extension View {
     }
 }
 
-protocol KeyboardReadable {
-    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
-}
-
-extension KeyboardReadable {
-    var keyboardPublisher: AnyPublisher<Bool, Never> {
-        Publishers.Merge(
-            NotificationCenter.default
-                .publisher(for: UIResponder.keyboardWillShowNotification)
-                .map { _ in true },
-            NotificationCenter.default
-                .publisher(for: UIResponder.keyboardWillHideNotification)
-                .map { _ in false }
-        )
-        .eraseToAnyPublisher()
-    }
-}
-
-struct BottomSheet: View, KeyboardReadable {
+struct BottomSheet: View {
     @Binding var isShow: Bool
     @State private var isKeyboardVisible = false
+    @State private var keyboardHeight: CGFloat = 0.0
+    private let springHeight: CGFloat = 20
     let height: CGFloat
     let title: String
     let injectecView: AnyView
@@ -53,7 +37,7 @@ struct BottomSheet: View, KeyboardReadable {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             Spacer()
             Rectangle()
                 .frame(width: Constants.deviceWidth, height: height)
@@ -81,13 +65,27 @@ struct BottomSheet: View, KeyboardReadable {
                     }
                 }
                 .cornerRadius(16, corners: [.topLeft, .topRight])
-                .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                    isKeyboardVisible = newIsKeyboardVisible
-                    print("is keyboard visible \(newIsKeyboardVisible)")
-                }
+            Rectangle()
+                .frame(height: springHeight + keyboardHeight)
+                .foregroundColor(Color(.systemGray6))
         }
-        .offset(y: isShow ? 0 : height)
-        .offset(y: isKeyboardVisible ? -300 : 0)
+        .offset(y: isShow ? springHeight : height + springHeight)
+        .animation(.ripple(), value: isShow)
+        .animation(.linear(duration: 0.2), value: keyboardHeight)
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                    self.keyboardHeight = keyboardSize.height
+                }
+            }
+            
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                self.keyboardHeight = 0.0
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self)
+        }
     }
     
     var dismissButton: some View {
@@ -95,6 +93,7 @@ struct BottomSheet: View, KeyboardReadable {
             withAnimation {
                 isShow = false
             }
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         } label: {
             Image(systemName: "xmark.circle.fill")
                 .symbolRenderingMode(.hierarchical)
@@ -120,6 +119,7 @@ struct BottomSheetInfo: ViewModifier {
                         withAnimation {
                             isShowModal = false
                         }
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
                 
                 VStack {

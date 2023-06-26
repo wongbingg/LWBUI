@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-struct TestView: View, KeyboardReadable {
+struct TestView: View {
     @State private var isShowModal: Bool = false
     @State private var inputText: String = ""
-//    @State private var isKeyboardVisible = false
     
     var body: some View {
         VStack {
@@ -25,7 +24,7 @@ struct TestView: View, KeyboardReadable {
                 .foregroundColor(.clear)
             
             Button {
-                withAnimation(.ripple()) {
+                withAnimation {
                     isShowModal.toggle()
                 }
             } label: {
