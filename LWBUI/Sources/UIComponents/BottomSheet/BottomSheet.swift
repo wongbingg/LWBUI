@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RoundedCorner: Shape {
     
@@ -24,45 +25,69 @@ extension View {
     }
 }
 
-struct BottomSheet: View {
+protocol KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+extension KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> {
+        Publishers.Merge(
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillShowNotification)
+                .map { _ in true },
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in false }
+        )
+        .eraseToAnyPublisher()
+    }
+}
+
+struct BottomSheet: View, KeyboardReadable {
     @Binding var isShow: Bool
+    @State private var isKeyboardVisible = false
     let height: CGFloat
     let title: String
     let injectecView: AnyView
 //    var sheetBody: some View
     
     var body: some View {
-        if isShow {
-            VStack {
-                Spacer()
-                Rectangle()
-                    .frame(width: UIScreen.main.bounds.width, height: height)
-                    .foregroundColor(Color(.systemGray6))
-                    .overlay {
-                        VStack {
-                            HStack {
-                                ZStack {
-                                    Text(title)
-                                        .padding()
-                                    HStack {
-                                        Spacer()
-                                        dismissButton
-                                            .padding(.trailing, 16)
-                                    }
+        
+        VStack {
+            Spacer()
+            Rectangle()
+                .frame(width: Constants.deviceWidth, height: height)
+                .foregroundColor(Color(.systemGray6))
+                .overlay {
+                    VStack {
+                        HStack {
+                            ZStack {
+                                Text(title)
+                                    .padding()
+                                HStack {
+                                    Spacer()
+                                    dismissButton
+                                        .padding(.trailing, 16)
                                 }
                             }
-                            Divider()
-                            Spacer()
-                                .frame(width: Constants.deviceWidth)
-                                .overlay {
-                                    // TODO: 외부에서 주입받은 View
-                                    injectecView
-                                }
                         }
+                        Divider()
+                        Spacer()
+                            .frame(width: Constants.deviceWidth)
+                            .overlay {
+                                // TODO: 외부에서 주입받은 View
+                                injectecView
+                            }
                     }
-                    .cornerRadius(16, corners: [.topLeft, .topRight])
-            }
+                }
+                .cornerRadius(16, corners: [.topLeft, .topRight])
+                .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                    isKeyboardVisible = newIsKeyboardVisible
+                    print("is keyboard visible \(newIsKeyboardVisible)")
+                }
         }
+        .offset(y: isShow ? 0 : height)
+        .offset(y: isKeyboardVisible ? -300 : 0)
     }
     
     var dismissButton: some View {
@@ -89,6 +114,7 @@ struct BottomSheetInfo: ViewModifier {
             .overlay {
                 
                 Color.black.opacity(isShowModal ? 0.3 : 0)
+                    .ignoresSafeArea()
                     .disabled(isShowModal == false)
                     .onTapGesture {
                         withAnimation {
@@ -98,10 +124,13 @@ struct BottomSheetInfo: ViewModifier {
                 
                 VStack {
                     Spacer()
-                    BottomSheet(isShow: $isShowModal, height: height, title: title, injectecView: injectedView)
-                    .transition(.move(edge: .bottom))
+                    BottomSheet(isShow: $isShowModal,
+                                height: height,
+                                title: title,
+                                injectecView: injectedView)
                 }
                 .edgesIgnoringSafeArea(.bottom)
+                .transition(.move(edge: .bottom))
             }
     }
 }
@@ -115,6 +144,14 @@ extension View {
 
 struct BottomSheet_Previews: PreviewProvider {
     static var previews: some View {
-        BottomSheet(isShow: .constant(true), height: 300, title: "동의 서약서", injectecView: AnyView(Text("df")))
+        BottomSheet(isShow: .constant(true), height: 300, title: "동의 서약서", injectecView: AnyView(
+            VStack {
+                Spacer()
+                Text("df")
+                Text("x테스트 ")
+                    .padding(.bottom, 20)
+            }
+            )
+        )
     }
 }

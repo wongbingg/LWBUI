@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct TestView: View {
+struct TestView: View, KeyboardReadable {
     @State private var isShowModal: Bool = false
     @State private var inputText: String = ""
+//    @State private var isKeyboardVisible = false
+    
     var body: some View {
         VStack {
             Rectangle()
@@ -35,16 +37,20 @@ struct TestView: View {
         .bottomSheet(isShow: $isShowModal, height: 250, title: "이메일 변경", injectedView: AnyView(
             VStack {
                 TextField("이메일을 변경해주세요", text: $inputText)
-                    .cornerRadius(14)
                     .padding()
+                    .cornerRadius(30)
                     .border(Color(.systemGray2))
                     .padding()
+//                    .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+//                        isKeyboardVisible = newIsKeyboardVisible
+//                        print("is keyboard visible \(newIsKeyboardVisible)")
+//                    }
                 
                 Button {
                     inputText = ""
                 } label: {
                     Capsule()
-                        .frame(width: 200, height: 50)
+                        .frame(width: 100, height: 50)
                         .overlay {
                             Text("확인")
                                 .foregroundColor(.white)
