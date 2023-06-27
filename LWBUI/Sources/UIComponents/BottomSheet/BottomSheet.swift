@@ -8,23 +8,6 @@
 import SwiftUI
 import Combine
 
-struct RoundedCorner: Shape {
-    
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
-
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
-    }
-}
-
 struct BottomSheet: View {
     @Binding var isShow: Bool
     @State private var isKeyboardVisible = false
@@ -99,46 +82,6 @@ struct BottomSheet: View {
                 .symbolRenderingMode(.hierarchical)
                 .tint(Color(.gray))
         }
-    }
-}
-
-struct BottomSheetInfo: ViewModifier {
-    @Binding var isShowModal: Bool
-    let height: CGFloat
-    let title: String
-    let injectedView: AnyView
-    
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                
-                Color.black.opacity(isShowModal ? 0.3 : 0)
-                    .ignoresSafeArea()
-                    .disabled(isShowModal == false)
-                    .onTapGesture {
-                        withAnimation {
-                            isShowModal = false
-                        }
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    }
-                
-                VStack {
-                    Spacer()
-                    BottomSheet(isShow: $isShowModal,
-                                height: height,
-                                title: title,
-                                injectecView: injectedView)
-                }
-                .edgesIgnoringSafeArea(.bottom)
-                .transition(.move(edge: .bottom))
-            }
-    }
-}
-
-extension View {
-    
-    func bottomSheet(isShow: Binding<Bool>, height: CGFloat, title: String, injectedView: AnyView) -> some View {
-        modifier(BottomSheetInfo(isShowModal: isShow, height: height, title: title, injectedView: injectedView))
     }
 }
 
