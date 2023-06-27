@@ -40,10 +40,6 @@ struct TestView: View {
                     .cornerRadius(30)
                     .border(Color(.systemGray2))
                     .padding()
-//                    .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-//                        isKeyboardVisible = newIsKeyboardVisible
-//                        print("is keyboard visible \(newIsKeyboardVisible)")
-//                    }
                 
                 Button {
                     inputText = ""

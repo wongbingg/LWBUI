@@ -16,7 +16,6 @@ struct BottomSheet: View {
     let height: CGFloat
     let title: String
     let injectecView: AnyView
-//    var sheetBody: some View
     
     var body: some View {
         
