@@ -12,13 +12,17 @@ struct ContentView: View {
 
     var body: some View {
         // MARK: - Modern Category View
-        ModernCategoryView(
-            data: ["전체", "포트폴리오", "핀테크 트렌드", "핫 플레이스", "쿨 피플", "잘알못 칼럼"],
-            selectedCategory: $category
-        )
+//        ModernCategoryView(
+//            data: ["전체", "포트폴리오", "핀테크 트렌드", "핫 플레이스", "쿨 피플", "잘알못 칼럼"],
+//            selectedCategory: $category
+//        )
         
         // MARK: - Bottom Sheet
 //        TestView()
+        
+        // MARK: - Vertical Banner
+        
+        VerticalBanner()
     }
 }
 
