@@ -14,6 +14,8 @@ struct VerticalBanner: View {
     @State private var workItem: DispatchWorkItem?
     
     let banners = [(0, "첫번째"), (1, "두번째"), (2, "세번째"), (3, "네번째"), (4, "다섯번째")]
+    let bannerWidth: CGFloat
+    let bannerHeight: CGFloat
     
     var body: some View {
         
@@ -21,10 +23,14 @@ struct VerticalBanner: View {
             ForEach(banners, id: \.0) { banner in
                 
                 Rectangle()
-                    .frame(width: Constants.deviceWidth, height: 200)
-                    .foregroundColor(Color(.systemCyan))
+                    .frame(width: bannerWidth, height: bannerHeight)
+                    .foregroundColor(Color(.systemGray6))
                     .overlay {
-                        Text("\(banner.1) 광고 입니다.")
+//                        Text("\(banner.1) 광고 입니다.")
+                        Image("banner\(banner.0 + 1)")
+                            .resizable()
+                            .scaledToFill()
+                        
                     }
                     .rotationEffect(.degrees(-90))
             }
@@ -35,11 +41,11 @@ struct VerticalBanner: View {
             sendRequest { isAutoPaging = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: workItem!)
         }))
-        .background(Color(.systemGray))
+        .background(Color(.white))
         .tabViewStyle(.page(indexDisplayMode: .always))
-        .frame(width: 200, height: Constants.deviceWidth)
-        .padding(.vertical, -12)
-        .cornerRadius(16, corners: .allCorners)
+        .frame(width: bannerHeight, height: bannerWidth)
+//        .padding(.vertical, -12)
+        .cornerRadius(8, corners: .allCorners)
         .rotationEffect(.degrees(90))
         .onChange(of: bannerIndex, perform: { newIndex in
             guard isAutoPaging == true else { return }
@@ -78,7 +84,8 @@ private extension VerticalBanner {
 }
 
 struct VerticalBanner_Previews: PreviewProvider {
+    static var width: CGFloat = 300
     static var previews: some View {
-        VerticalBanner()
+        VerticalBanner(bannerWidth: width, bannerHeight: width * 200/428)
     }
 }
