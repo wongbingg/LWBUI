@@ -19,7 +19,6 @@ struct ModernCategoryView: View {
             )
             .frame(width: UIScreen.main.bounds.width)
             
-            
             TabView(selection: $selectedCategory) {
                 ForEach(data, id: \.self) { number in
                     ListView(data: number)

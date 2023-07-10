@@ -19,12 +19,12 @@ struct HorizontalScrollBar: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    HStack(spacing: 10) {
+                    HStack(spacing: 20) {
                         ForEach(data, id: \.hashValue) { category in
                             Button {
                                 selectedCategory = category
                                 withAnimation {
-                                    proxy.scrollTo(category, anchor: .center)
+                                    proxy.scrollTo(category, anchor: .bottom)
                                 }
                                 barWidth = barWidthDictionary[category] ?? 0.0
                             } label: {
@@ -41,26 +41,21 @@ struct HorizontalScrollBar: View {
                                             barOffsetXDictionary[category] == nil else { return }
                                     
                                     barWidthDictionary[category] = textGeometry.size.width
-                                    barOffsetXDictionary[category] = textGeometry.frame(in: .named("clearColor")).minX - CGFloat(16)
+                                    barOffsetXDictionary[category] = textGeometry.frame(in: .named("clearColor")).minX
                                 }
                                 .id("clearColor")
                             })
                         }
                     }
+                    .padding(.horizontal, 16)
                     
                     Capsule()
                         .offset(x: barOffsetXDictionary[selectedCategory] ?? 0.0)
                         .frame(width:barWidthDictionary[selectedCategory] ?? 0.0, height: 3)
                         .animation(.ripple(), value: selectedCategory)
                 }
-                .padding()
-                .overlay {
-                    Divider()
-                        .padding(.top, 35)
-                }
             }
-            .frame(height: 35)
-            .background(Color(.secondarySystemBackground))
+            .background(Color(.white))
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                     withAnimation {
@@ -68,7 +63,7 @@ struct HorizontalScrollBar: View {
                     }
                 }
             }
-            // 버튼 탭이 아닌 다른 방법으로 selectedCategory가 변경되었을 때 반응
+            // MARK: - 버튼 탭이 아닌 다른 방법으로 selectedCategory가 변경되었을 때 반응
             .onChange(of: selectedCategory) { newValue in
                 withAnimation {
                     proxy.scrollTo(newValue, anchor: .center)
