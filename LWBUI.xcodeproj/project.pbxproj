@@ -13,11 +13,13 @@
 		AF1517192A207AFE0093C6EE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF1517182A207AFE0093C6EE /* Preview Assets.xcassets */; };
 		AF20AB1C2A4013B90056B2BA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20AB1B2A4013B90056B2BA /* Constants.swift */; };
 		AF38F4082A4A7D4600F4C5FB /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF38F4072A4A7D4600F4C5FB /* View+.swift */; };
+		AF677CE82A552A7D00DEB62A /* HomeTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF677CE72A552A7D00DEB62A /* HomeTestView.swift */; };
 		AF984AA02A2DC9E200D7F542 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF984A9F2A2DC9E200D7F542 /* BottomSheet.swift */; };
 		AF984AA22A2DCAB600D7F542 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF984AA12A2DCAB600D7F542 /* TestView.swift */; };
 		AFA232842A20A25600C93F54 /* ModernCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232832A20A25600C93F54 /* ModernCategoryView.swift */; };
 		AFA232862A20A51D00C93F54 /* HorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232852A20A51D00C93F54 /* HorizontalScrollBar.swift */; };
 		AFA232882A20A76C00C93F54 /* Animation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA232872A20A76C00C93F54 /* Animation+.swift */; };
+		AFB488582A5BBDB80073F5F3 /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB488572A5BBDB80073F5F3 /* MyButton.swift */; };
 		AFC070E32A29B1C6008D859C /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC070E22A29B1C6008D859C /* ListView.swift */; };
 		AFD1F7AD2A52B96A009EA301 /* VerticalBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD1F7AC2A52B96A009EA301 /* VerticalBanner.swift */; };
 /* End PBXBuildFile section */
@@ -31,11 +33,13 @@
 		AF1517182A207AFE0093C6EE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF20AB1B2A4013B90056B2BA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AF38F4072A4A7D4600F4C5FB /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		AF677CE72A552A7D00DEB62A /* HomeTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTestView.swift; sourceTree = "<group>"; };
 		AF984A9F2A2DC9E200D7F542 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		AF984AA12A2DCAB600D7F542 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		AFA232832A20A25600C93F54 /* ModernCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernCategoryView.swift; sourceTree = "<group>"; };
 		AFA232852A20A51D00C93F54 /* HorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollBar.swift; sourceTree = "<group>"; };
 		AFA232872A20A76C00C93F54 /* Animation+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+.swift"; sourceTree = "<group>"; };
+		AFB488572A5BBDB80073F5F3 /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		AFC070E22A29B1C6008D859C /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		AFD1F7AC2A52B96A009EA301 /* VerticalBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalBanner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +100,7 @@
 		AF3B94202A370CD100B2C768 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				AFB488562A5BBDAE0073F5F3 /* MyButton */,
 				AFD1F7AB2A52B7D8009EA301 /* VerticalBanner */,
 				AF3B94222A370D1F00B2C768 /* BottomSheet */,
 				AF3B94212A370CDC00B2C768 /* ModernCategoryView */,
@@ -152,10 +157,19 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		AFB488562A5BBDAE0073F5F3 /* MyButton */ = {
+			isa = PBXGroup;
+			children = (
+				AFB488572A5BBDB80073F5F3 /* MyButton.swift */,
+			);
+			path = MyButton;
+			sourceTree = "<group>";
+		};
 		AFD1F7AB2A52B7D8009EA301 /* VerticalBanner */ = {
 			isa = PBXGroup;
 			children = (
 				AFD1F7AC2A52B96A009EA301 /* VerticalBanner.swift */,
+				AF677CE72A552A7D00DEB62A /* HomeTestView.swift */,
 			);
 			path = VerticalBanner;
 			sourceTree = "<group>";
@@ -233,12 +247,14 @@
 				AFA232882A20A76C00C93F54 /* Animation+.swift in Sources */,
 				AF1517132A207AFD0093C6EE /* ContentView.swift in Sources */,
 				AF984AA02A2DC9E200D7F542 /* BottomSheet.swift in Sources */,
+				AFB488582A5BBDB80073F5F3 /* MyButton.swift in Sources */,
 				AFA232862A20A51D00C93F54 /* HorizontalScrollBar.swift in Sources */,
 				AF984AA22A2DCAB600D7F542 /* TestView.swift in Sources */,
 				AFC070E32A29B1C6008D859C /* ListView.swift in Sources */,
 				AFD1F7AD2A52B96A009EA301 /* VerticalBanner.swift in Sources */,
 				AF1517112A207AFD0093C6EE /* LWBUIApp.swift in Sources */,
 				AFA232842A20A25600C93F54 /* ModernCategoryView.swift in Sources */,
+				AF677CE82A552A7D00DEB62A /* HomeTestView.swift in Sources */,
 				AF38F4082A4A7D4600F4C5FB /* View+.swift in Sources */,
 				AF20AB1C2A4013B90056B2BA /* Constants.swift in Sources */,
 			);
