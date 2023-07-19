@@ -14,8 +14,9 @@ struct ModernCategoryView: View {
     var body: some View {
         VStack {
             HorizontalScrollBar(
-                data: data,
-                selectedCategory: $selectedCategory
+                categories: data,
+                selectedCategory: $selectedCategory,
+                isButtonControl: .constant(false)
             )
             .frame(width: UIScreen.main.bounds.width)
             

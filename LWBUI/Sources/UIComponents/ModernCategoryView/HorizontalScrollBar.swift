@@ -8,25 +8,30 @@
 import SwiftUI
 
 struct HorizontalScrollBar: View {
-    var data: [String]
+    var categories: [String]
     
     @State private var barWidthDictionary: [String: CGFloat] = [:]
     @State private var barOffsetXDictionary: [String: CGFloat] = [:]
     @State private var barWidth: CGFloat = 0.0
     @Binding var selectedCategory: String
+    @Binding var isButtonControl: Bool
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     HStack(spacing: 20) {
-                        ForEach(data, id: \.hashValue) { category in
+                        ForEach(categories, id: \.hashValue) { category in
                             Button {
                                 selectedCategory = category
                                 withAnimation {
                                     proxy.scrollTo(category, anchor: .bottom)
                                 }
                                 barWidth = barWidthDictionary[category] ?? 0.0
+                                isButtonControl = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    isButtonControl = false
+                                }
                             } label: {
                                 Text(category)
                                     .foregroundColor(
@@ -83,10 +88,11 @@ struct HorizontalScrollBar_Previews: PreviewProvider {
 
     static var previews: some View {
         HorizontalScrollBar(
-            data: ["전체", "포트폴리오", "핀테크 트렌드",
+            categories: ["전체", "포트폴리오", "핀테크 트렌드",
                    "핫 플레이스", "쿨 피플", "잘알못 칼럼",
                    "gkgkdhdh", "Leewonbeen", "ddddddddddddddd"],
-            selectedCategory: selectedCt
+            selectedCategory: selectedCt,
+            isButtonControl: .constant(false)
         )
     }
 }
