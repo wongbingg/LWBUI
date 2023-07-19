@@ -26,14 +26,13 @@ struct VerticalBanner: View {
                     .frame(width: bannerWidth, height: bannerHeight)
                     .foregroundColor(Color(.systemGray6))
                     .overlay {
-//                        Text("\(banner.1) 광고 입니다.")
                         Image("banner\(banner.0 + 1)")
                             .resizable()
                             .scaledToFill()
                         
                     }
-                    .rotationEffect(.degrees(-90))
             }
+            .rotationEffect(.degrees(-90))
         }
         .gesture(DragGesture().onChanged({ gesture in
             print("dragged")
@@ -44,9 +43,9 @@ struct VerticalBanner: View {
         .background(Color(.white))
         .tabViewStyle(.page(indexDisplayMode: .always))
         .frame(width: bannerHeight, height: bannerWidth)
-//        .padding(.vertical, -12)
         .cornerRadius(8, corners: .allCorners)
         .rotationEffect(.degrees(90))
+        .offset(x: 0, y: -bannerWidth/2 + bannerHeight/2)
         .onChange(of: bannerIndex, perform: { newIndex in
             guard isAutoPaging == true else { return }
             guard newIndex <= banners.count - 1 else {
@@ -87,5 +86,6 @@ struct VerticalBanner_Previews: PreviewProvider {
     static var width: CGFloat = 300
     static var previews: some View {
         VerticalBanner(bannerWidth: width, bannerHeight: width * 200/428)
+            .debug()
     }
 }
