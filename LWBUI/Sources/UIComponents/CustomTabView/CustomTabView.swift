@@ -1,5 +1,5 @@
 //
-//  CustomTabView.swift
+//  CustomTabBar.swift
 //  LWBUI
 //
 //  Created by 이원빈 on 2023/07/20.
@@ -7,106 +7,116 @@
 
 import SwiftUI
 
-struct CustomTabView: View {
+struct CustomTabBar: View {
     
-    enum Tab {
-        case home
-        case search
-        case mypage
-        case setting
-    }
+    let tabs: [CustomTab]
+    let tabBarHeight: CGFloat
+    let tabBarBackgroundColor: Color
+    let tabBarTintColor: Color
+    let tabBarSelectedTintColor: Color
     
-    @State private var selection: Tab = .home
+    @State private var selection = ""
     
-    init() {
+    init(
+        tabs: [CustomTab],
+        tabBarHeight: CGFloat,
+        tabBarBackgroundColor: Color,
+        tabBarTintColor: Color,
+        tabBarSelectedTintColor: Color
+    ) {
         UITabBar.appearance().backgroundColor = .clear
         UITabBar.appearance().unselectedItemTintColor = .clear
+        
+        self.tabs = tabs
+        self.selection = tabs.first?.tag ?? ""
+        self.tabBarHeight = tabBarHeight
+        self.tabBarBackgroundColor = tabBarBackgroundColor
+        self.tabBarTintColor = tabBarTintColor
+        self.tabBarSelectedTintColor = tabBarSelectedTintColor
     }
     
     var body: some View {
         ZStack {
             TabView(selection: $selection) {
-                GreenTabView()
-                    .tag(Tab.home)
-                RedTabView()
-                    .tag(Tab.search)
-                BlueTabView()
-                    .tag(Tab.mypage)
-                RedTabView()
-                    .tag(Tab.setting)
+                
+                ForEach(tabs, id: \.tag) { tab in
+                    tab.view
+                        .tag(tab.tag)
+                }
             }
             
-            customTabBar(height: 98,
-                         backgroundColor: Color(.systemGray5))
+            customTabBar(height: tabBarHeight,
+                         backgroundColor: tabBarBackgroundColor,
+                         tintColor: tabBarTintColor,
+                         selectedTintColor: tabBarSelectedTintColor)
         }
     }
 }
 
 struct CustomTab {
-    let title: String
+    let tag: String
     let image: Image
     let view: AnyView
 }
 
-private extension CustomTabView {
+private extension CustomTabBar {
     
     @ViewBuilder
-    func customTabBar(height: CGFloat, backgroundColor: Color) -> some View {
+    func customTabBar(
+        height: CGFloat,
+        backgroundColor: Color,
+        tintColor: Color,
+        selectedTintColor: Color
+    ) -> some View {
         VStack {
             Spacer()
             Rectangle()
                 .frame(width: Constants.deviceWidth, height: height)
                 .foregroundColor(backgroundColor)
                 .overlay {
-                    VStack {
-                        HStack(spacing: 69) {
+                    HStack(spacing: (Constants.deviceWidth-72-96)/3) {
+                        ForEach(tabs, id: \.tag) { tab in
                             Button {
-                                selection = .home
+                                selection = tab.tag
                             } label: {
-                                Image(systemName: "house")
+                                tab.image
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }
-                            
-                            Button {
-                                selection = .search
-                            } label: {
-                                Image(systemName: "person")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-                            
-                            Button {
-                                selection = .mypage
-                            } label: {
-                                Image(systemName: "book")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-                            
-                            Button {
-                                selection = .setting
-                            } label: {
-                                Image(systemName: "gear")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(selection == tab.tag ? selectedTintColor : tintColor)
                             }
                         }
-                        .tint(.black)
-                        
-                        Spacer().frame(height: 34)
                     }
+                    .padding(.horizontal, 36)
                 }
         }
-        .ignoresSafeArea()
     }
 }
 
+// MARK: - Previews
+
 struct CustomTabBar_Previews: PreviewProvider {
+    
+    static let tabs: [CustomTab] = [
+        .init(tag: "home", image: Image(systemName: "house"), view: .init(GreenTabView())),
+        .init(tag: "search", image: Image(systemName: "book"), view: .init(BlueTabView())),
+        .init(tag: "mypage", image: Image(systemName: "person"), view: .init(RedTabView())),
+        .init(tag: "setting", image: Image(systemName: "gear"), view: .init(BlueTabView()))
+    ]
+    
     static var previews: some View {
-        CustomTabView()
+        CustomTabBar(
+            tabs: tabs,
+            tabBarHeight: 64,
+            tabBarBackgroundColor: .white,
+            tabBarTintColor: Color(hex: 0xDADCE3),
+            tabBarSelectedTintColor: .black
+        )
+        .shadow(color: Color(hex: 0x000000, opacity: 0.02), radius: 6, x: 0, y: -10)
     }
 }
+
+
+// MARK: - Example Views
 
 struct GreenTabView: View {
     var body: some View {
