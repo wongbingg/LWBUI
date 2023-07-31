@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HorizontalScrollBar: View {
-    var categories: [String]
+    let categories: [String]
+    let dampingFraction: CGFloat = 0.6
+    let speed: CGFloat = 2
     
     @State private var barWidthDictionary: [String: CGFloat] = [:]
     @State private var barOffsetXDictionary: [String: CGFloat] = [:]
@@ -57,7 +59,7 @@ struct HorizontalScrollBar: View {
                     Capsule()
                         .offset(x: barOffsetXDictionary[selectedCategory] ?? 0.0)
                         .frame(width:barWidthDictionary[selectedCategory] ?? 0.0, height: 3)
-                        .animation(.ripple(), value: selectedCategory)
+                        .animation(.ripple(dampingFraction: dampingFraction, speed: speed), value: selectedCategory)
                 }
             }
             .background(Color(.white))
