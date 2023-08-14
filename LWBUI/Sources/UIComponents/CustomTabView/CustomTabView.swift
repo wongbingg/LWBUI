@@ -53,12 +53,6 @@ struct CustomTabBar: View {
     }
 }
 
-struct CustomTab {
-    let tag: String
-    let image: Image
-    let view: AnyView
-}
-
 private extension CustomTabBar {
     
     @ViewBuilder
