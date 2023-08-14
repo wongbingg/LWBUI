@@ -9,11 +9,29 @@ import SwiftUI
 
 struct CustomTabBar: View {
     
+    enum Constant {
+        enum TabBar {
+            static let height: CGFloat = 49
+            
+        }
+    }
+    
+    enum Metric {
+        enum TabBar {
+            static let horizontalPadding: CGFloat = 36
+            static let iconWidth: CGFloat = 24
+        }
+    }
+    
     let tabs: [CustomTab]
     let tabBarHeight: CGFloat
     let tabBarBackgroundColor: Color
     let tabBarTintColor: Color
     let tabBarSelectedTintColor: Color
+    
+    var interIconSpacing: CGFloat {
+        (Constants.deviceWidth - (Metric.TabBar.horizontalPadding*2) - (Metric.TabBar.iconWidth*CGFloat(tabs.count))) / CGFloat(tabs.count-1)
+    }
     
     @State private var selection = ""
     
@@ -26,6 +44,9 @@ struct CustomTabBar: View {
     ) {
         UITabBar.appearance().backgroundColor = .clear
         UITabBar.appearance().unselectedItemTintColor = .clear
+        UITabBar.appearance().backgroundImage = UIImage()
+        UITabBar.appearance().isTranslucent = true
+        UITabBar.appearance().backgroundColor = .white
         
         self.tabs = tabs
         self.selection = tabs.first?.tag ?? ""
@@ -42,8 +63,10 @@ struct CustomTabBar: View {
                 ForEach(tabs, id: \.tag) { tab in
                     tab.view
                         .tag(tab.tag)
+                        .padding(.bottom, tabBarHeight - Constant.TabBar.height)
                 }
             }
+            
             
             customTabBar(height: tabBarHeight,
                          backgroundColor: tabBarBackgroundColor,
@@ -68,19 +91,19 @@ private extension CustomTabBar {
                 .frame(width: Constants.deviceWidth, height: height)
                 .foregroundColor(backgroundColor)
                 .overlay {
-                    HStack(spacing: (Constants.deviceWidth-72-96)/3) {
+                    HStack(spacing: interIconSpacing) {
                         ForEach(tabs, id: \.tag) { tab in
                             Button {
                                 selection = tab.tag
                             } label: {
                                 tab.image
                                     .resizable()
-                                    .frame(width: 24, height: 24)
+                                    .frame(width: Metric.TabBar.iconWidth, height: Metric.TabBar.iconWidth)
                                     .foregroundColor(selection == tab.tag ? selectedTintColor : tintColor)
                             }
                         }
                     }
-                    .padding(.horizontal, 36)
+                    .padding(.horizontal, Metric.TabBar.horizontalPadding)
                 }
         }
     }
@@ -114,15 +137,25 @@ struct CustomTabBar_Previews: PreviewProvider {
 
 struct GreenTabView: View {
     var body: some View {
-        ZStack {
-            Circle()
-                .frame(width: 300, height: 300)
-                .foregroundColor(.green)
-            
-            Text("\(3)")
-                .font(.system(size: 70))
-                .foregroundColor(.white)
-                .fontWeight(.bold)
+        ScrollView {
+            VStack(spacing: 20) {
+                ZStack {
+                    Circle()
+                        .frame(width: 300, height: 300)
+                        .foregroundColor(.green)
+                    
+                    Text("\(3)")
+                        .font(.system(size: 70))
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                }
+                ForEach((1...15), id: \.self) { _ in
+                    Text("heollo")
+                        .font(.largeTitle)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemGray5))
         }
     }
 }
